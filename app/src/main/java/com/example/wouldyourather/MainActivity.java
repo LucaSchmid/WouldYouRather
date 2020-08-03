@@ -37,6 +37,7 @@ public class MainActivity extends FragmentActivity {
                 case 1:
                     return new fragment_screen_slide_page2();
 
+
             }
             return new fragment_screen_slide_page1();
         }
