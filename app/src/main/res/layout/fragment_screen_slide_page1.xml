@@ -15,7 +15,7 @@
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum" />
+            android:text="Page1" />
     </ScrollView>
 
 </FrameLayout>
