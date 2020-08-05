@@ -8,10 +8,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends FragmentActivity {
+import java.io.BufferedReader;
+
+public class MainActivity extends FragmentActivity  {
 
     private BottomNavigationView bottomNavigationView;
 
@@ -23,7 +27,9 @@ public class MainActivity extends FragmentActivity {
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottonNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout1, new QuestionFeed_Fragment()).commit();
+
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottonNavMethod = new
             BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,5 +51,6 @@ public class MainActivity extends FragmentActivity {
                     return true;
                 }
             };
+
 
 }

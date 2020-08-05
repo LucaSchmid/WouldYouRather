@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment_screen_slide_page1">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
         <TextView style="?android:textAppearanceMedium"
-            android:padding="16dp"
+            android:id="@+id/textView_head"
+            android:padding="18dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Page1" />
-    </ScrollView>
+            android:text="Beliebteste" />
+    <TextView
+        android:id="@+id/EditText1"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/textView_head"
+        android:background="@drawable/background_edittext_question1"
+        android:hint="would you rather" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/EditText1"
+        android:textSize="24dp"
+        android:text="or" />
+    <TextView
+        android:id="@+id/EditText2"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView"
+        android:background="@drawable/background_edittext_question2"
+        android:hint="would you rather"/>
+
+
+</RelativeLayout>
