@@ -5,12 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".newQuestion_Fragment">
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="160dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#6666"
+        />
+
     <EditText
         android:id="@+id/EditText1"
         android:layout_width="250dp"
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/background_edittext_question1"
         android:hint="would you rather" />
 
@@ -37,16 +46,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="ASK QUESTION"
-        android:layout_below="@+id/EditText2" />
-    <Button
-        android:id="@+id/ButtonRefresh"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="L"
-        android:layout_toRightOf="@+id/ButtonAddQuestion"
-        android:layout_below="@+id/EditText2"/>
+        android:layout_below="@+id/EditText2"
+        android:onClick="addQuestion"
+        />
+
     <TextView
         android:id="@+id/textViewCheckConnection"
         android:layout_width="wrap_content"
