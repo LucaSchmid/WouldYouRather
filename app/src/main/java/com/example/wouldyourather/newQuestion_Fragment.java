@@ -31,7 +31,6 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
     TextView textViewCheckConnection;
     View view;
     EditText WouldYouRather1, WouldYouRather2;
-    String wouldYouRather1, wouldYouRather2, Kategory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,40 +84,15 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
     }
 
     public void addQuestion(View view){
-        /*if (checkConnection()) {
-
-            wouldYouRather1 = WouldYouRather1.getText().toString();
-            wouldYouRather2 = WouldYouRather2.getText().toString();
+        if (checkConnection()) {
             Toast.makeText(getActivity(),
                     "added to the DB", Toast.LENGTH_LONG).show();
-        }*/
+        }
     }
-    /*class BackgroudTask extends AsyncTask<Void,Void,Void>
-    {
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-    }*/
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Kategory = adapterView.getItemAtPosition(i).toString();
+
     }
 
     @Override
