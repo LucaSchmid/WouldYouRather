@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import static androidx.core.content.ContextCompat.getSystemService;
 import static androidx.core.content.ContextCompat.getSystemServiceName;
 
@@ -31,19 +34,22 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
     TextView textViewCheckConnection;
     View view;
     EditText WouldYouRather1, WouldYouRather2;
+    DatabaseReference reff;
+    Questions questions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_new_question_, container, false);
+        questions = new Questions();
         //
         WouldYouRather1 = (EditText) view.findViewById(R.id.EditText1);
         WouldYouRather2 = (EditText) view.findViewById(R.id.EditText2);
-        //
-
         Button_AddQuestion = (Button) view.findViewById(R.id.ButtonAddQuestion);
         Button_AddQuestion.setOnClickListener(this);
         textViewCheckConnection = view.findViewById(R.id.textViewCheckConnection);
+        reff = FirebaseDatabase.getInstance().getReference().child("Questions");
+        //
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
         String [] values =
@@ -85,6 +91,9 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
 
     public void addQuestion(View view){
         if (checkConnection()) {
+            questions.setWouldYouRather1(WouldYouRather1.getText().toString().trim());
+            questions.setWouldYouRather2(WouldYouRather2.getText().toString().trim());
+            reff.push().setValue(questions);
             Toast.makeText(getActivity(),
                     "added to the DB", Toast.LENGTH_LONG).show();
         }

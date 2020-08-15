@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "176267859794",
+    "firebase_url": "https://wouldyourather-af07a.firebaseio.com",
+    "project_id": "wouldyourather-af07a",
+    "storage_bucket": "wouldyourather-af07a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176267859794:android:724bbd5e326a01d5aa4c8b",
+        "android_client_info": {
+          "package_name": "com.example.wouldyourather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176267859794-spp95bm2knmn2orq09d7au9gfg8948s6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wouldyourather",
+            "certificate_hash": "02781b85b25737c05618c233330d5610f254b4e8"
+          }
+        },
+        {
+          "client_id": "176267859794-a61ndbmh6ri206b64ir3la5jr6fqv4j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5G0Q9nO8QaWIE4Yms06ij5SDaiUX60B8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176267859794-a61ndbmh6ri206b64ir3la5jr6fqv4j2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
