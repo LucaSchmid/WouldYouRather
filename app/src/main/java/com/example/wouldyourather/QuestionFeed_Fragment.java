@@ -39,7 +39,17 @@ public class QuestionFeed_Fragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        tab.setText("Kategorie " + (position + 1));
+                        switch (position){
+                            case 0:
+                                tab.setText("Beliebteste " );
+                                break;
+                            case 1:
+                                tab.setText("Neueste " );
+                                break;
+                            default:
+                                tab.setText("Kategorie " + (position + 1));
+                        }
+
                     }
                 }).attach();
 
@@ -53,16 +63,16 @@ public class QuestionFeed_Fragment extends Fragment {
 
         @Override
         public Fragment createFragment(int position) {
-            switch (position){
-                case 0:
-                    return new fragment_screen_slide_page1();
-                case 1:
-                    return new fragment_screen_slide_page2();
+                switch (position) {
+                    case 0:
+                        return new fragment_screen_slide_page1();
+                    case 1:
+                        return new fragment_screen_slide_page2();
+                }
 
-
-            }
             return new fragment_screen_slide_page1();
         }
+
 
         @Override
         public int getItemCount() {

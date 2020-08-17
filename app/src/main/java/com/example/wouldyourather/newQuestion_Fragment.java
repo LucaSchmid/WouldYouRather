@@ -22,10 +22,12 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 import static androidx.core.content.ContextCompat.getSystemService;
 import static androidx.core.content.ContextCompat.getSystemServiceName;
 
-public class newQuestion_Fragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class newQuestion_Fragment extends Fragment implements View.OnClickListener{
 
     public newQuestion_Fragment() {
         // Required empty public constructor
@@ -34,6 +36,7 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
     TextView textViewCheckConnection;
     View view;
     EditText WouldYouRather1, WouldYouRather2;
+    String Kategory;
     DatabaseReference reff;
     Questions questions;
 
@@ -58,7 +61,17 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Kategory = spinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         checkConnection();
         return view;
@@ -93,19 +106,14 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
         if (checkConnection()) {
             questions.setWouldYouRather1(WouldYouRather1.getText().toString().trim());
             questions.setWouldYouRather2(WouldYouRather2.getText().toString().trim());
+            questions.setDate(new Date(new Date().getTime()));
+            questions.setKategory(Kategory);
+            questions.setWouldYouRather1_value(0);
+            questions.setWouldYouRather2_value(0);
             reff.push().setValue(questions);
             Toast.makeText(getActivity(),
                     "added to the DB", Toast.LENGTH_LONG).show();
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }
