@@ -22,19 +22,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class fragment_screen_slide_page1 extends Fragment implements View.OnClickListener {
+public class fragment_screen_slide_page3 extends Fragment implements View.OnClickListener {
     /////////////////////
-    //Kategorie Neueste//
+    //Kategorie Pervers//
     /////////////////////
 
-    TextView WouldYouRather1_TV, WouldYouRather2_TV, WouldYouRatherValue1_ID, WouldYouRatherValue2_ID, buttonVotePositive, buttonVoteNegative;
+    TextView WouldYouRather1_TV, WouldYouRather2_TV, WouldYouRatherValue1_ID, WouldYouRatherValue2_ID;
     Button buttonNext;
     private DatabaseReference ref;
     private Query query1;
     ArrayList<String> IDlist=new ArrayList<String>();
     String futureUID = "";
     String futureUIDzuvor = "";
-    int WouldYouRatherValue1, WouldYouRatherValue2, popularity;
+    int WouldYouRatherValue1, WouldYouRatherValue2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,17 +45,10 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
         WouldYouRather2_TV = v.findViewById(R.id.EditText2);
         WouldYouRatherValue1_ID = v.findViewById(R.id.WoulYourRatherValue1);
         WouldYouRatherValue2_ID = v.findViewById(R.id.WoulYourRatherValue2);
-        buttonVotePositive = v.findViewById(R.id.buttonVotePositive_ID);
-        buttonVoteNegative = v.findViewById(R.id.buttonVoteNegative_ID);
         buttonNext = v.findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
         WouldYouRather1_TV.setOnClickListener(this);
         WouldYouRather2_TV.setOnClickListener(this);
-        buttonVotePositive.setOnClickListener(this);
-        buttonVoteNegative.setOnClickListener(this);
-        WouldYouRatherValue1_ID.setVisibility(View.INVISIBLE);
-        WouldYouRatherValue2_ID.setVisibility(View.INVISIBLE);
-        buttonNext.setClickable(false);
         checkDB();
 
         return v;
@@ -62,11 +56,13 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
 
     public  void checkDB(){
         ref = FirebaseDatabase.getInstance().getReference().child("Questions");
-        query1 = ref.orderByChild("popularity");
+        query1 = ref.orderByKey();
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
+                     futureUID = "";
+                     futureUIDzuvor = "";
                     for (DataSnapshot supportItem: snapshot.getChildren()) {
                         futureUIDzuvor = futureUID;
                         futureUID =supportItem.getKey();
@@ -88,15 +84,19 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
                     query1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String WouldYouRather1 = snapshot.child("wouldYouRather1").getValue().toString();
-                            String WouldYouRather2 = snapshot.child("wouldYouRather2").getValue().toString();
-                            WouldYouRatherValue1 = Integer.parseInt(snapshot.child("wouldYouRather1_value").getValue().toString());
-                            WouldYouRatherValue2 = Integer.parseInt(snapshot.child("wouldYouRather2_value").getValue().toString());
-                            popularity =Integer.parseInt(snapshot.child("popularity").getValue().toString());
-                            WouldYouRather1_TV.setText(WouldYouRather1);
-                            WouldYouRather2_TV.setText(WouldYouRather2);
-                            WouldYouRatherValue1_ID.setText(Integer.toString(WouldYouRatherValue1));
-                            WouldYouRatherValue2_ID.setText(Integer.toString(WouldYouRatherValue2));
+                            String kategory = snapshot.child("kategory").getValue().toString();
+                            if(kategory.equals("Kategorie 3")) {
+                                String WouldYouRather1 = snapshot.child("wouldYouRather1").getValue().toString();
+                                String WouldYouRather2 = snapshot.child("wouldYouRather2").getValue().toString();
+                                WouldYouRatherValue1 = Integer.parseInt(snapshot.child("wouldYouRather1_value").getValue().toString());
+                                WouldYouRatherValue2 = Integer.parseInt(snapshot.child("wouldYouRather2_value").getValue().toString());
+                                WouldYouRather1_TV.setText(WouldYouRather1);
+                                WouldYouRather2_TV.setText(WouldYouRather2);
+                                WouldYouRatherValue1_ID.setText(Integer.toString(WouldYouRatherValue1));
+                                WouldYouRatherValue2_ID.setText(Integer.toString(WouldYouRatherValue2));
+                            }else {
+                                checkDB();
+                            }
                         }
 
                         @Override
@@ -104,7 +104,9 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
 
                         }
                     });
+
                 }
+
             }
 
             @Override
@@ -114,6 +116,7 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
         });
 
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -124,12 +127,11 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
                 WouldYouRatherValue2_ID.setVisibility(View.INVISIBLE);
                 WouldYouRather1_TV.setClickable(true);
                 WouldYouRather2_TV.setClickable(true);
-                buttonVotePositive.setClickable(true);
-                buttonVoteNegative.setClickable(true);
-                buttonNext.setClickable(false);
                 checkDB();
                 break;
             case R.id.EditText1:
+                Toast.makeText(getActivity(),
+                        "EDT 1", Toast.LENGTH_LONG).show();
                 WouldYouRatherValue1_ID.setVisibility(View.VISIBLE);
                 WouldYouRatherValue2_ID.setVisibility(View.VISIBLE);
 
@@ -139,9 +141,10 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
                 updateData.child("wouldYouRather1_value").setValue(WouldYouRatherValue1+1);
                 WouldYouRather1_TV.setClickable(false);
                 WouldYouRather2_TV.setClickable(false);
-                buttonNext.setClickable(true);
                 break;
             case R.id.EditText2:
+                Toast.makeText(getActivity(),
+                        "EDT 2", Toast.LENGTH_LONG).show();
                 WouldYouRatherValue1_ID.setVisibility(View.VISIBLE);
                 WouldYouRatherValue2_ID.setVisibility(View.VISIBLE);
 
@@ -151,24 +154,8 @@ public class fragment_screen_slide_page1 extends Fragment implements View.OnClic
                 updateData.child("wouldYouRather2_value").setValue(WouldYouRatherValue2+1);
                 WouldYouRather1_TV.setClickable(false);
                 WouldYouRather2_TV.setClickable(false);
-                buttonNext.setClickable(true);
                 break;
-            case R.id.buttonVotePositive_ID:
-                updateData = FirebaseDatabase.getInstance()
-                        .getReference("Questions")
-                        .child(futureUID);
-                updateData.child("popularity").setValue(popularity+1);
-                buttonVotePositive.setClickable(false);
-                buttonVoteNegative.setClickable(false);
-                break;
-            case R.id.buttonVoteNegative_ID:
-                updateData = FirebaseDatabase.getInstance()
-                        .getReference("Questions")
-                        .child(futureUID);
-                updateData.child("popularity").setValue(popularity-1);
-                buttonVotePositive.setClickable(false);
-                buttonVoteNegative.setClickable(false);
-                break;
+
         }
     }
 }

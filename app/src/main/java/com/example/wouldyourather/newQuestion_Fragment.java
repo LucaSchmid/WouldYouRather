@@ -110,6 +110,7 @@ public class newQuestion_Fragment extends Fragment implements View.OnClickListen
             questions.setKategory(Kategory);
             questions.setWouldYouRather1_value(0);
             questions.setWouldYouRather2_value(0);
+            questions.setPopularity(0);
             reff.push().setValue(questions);
             Toast.makeText(getActivity(),
                     "added to the DB", Toast.LENGTH_LONG).show();

@@ -23,11 +23,18 @@ import java.util.ArrayList;
 
 
 public class fragment_screen_slide_page2 extends Fragment implements View.OnClickListener {
-    TextView WouldYouRather1_TV, WouldYouRather2_TV;
+    /////////////////////
+    //Kategorie Neueste//
+    /////////////////////
+
+    TextView WouldYouRather1_TV, WouldYouRather2_TV, WouldYouRatherValue1_ID, WouldYouRatherValue2_ID;
     Button buttonNext;
     private DatabaseReference ref;
     private Query query1;
     ArrayList<String> IDlist=new ArrayList<String>();
+    String futureUID = "";
+    String futureUIDzuvor = "";
+    int WouldYouRatherValue1, WouldYouRatherValue2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,10 +42,16 @@ public class fragment_screen_slide_page2 extends Fragment implements View.OnClic
                 R.layout.fragment_screen_slide_page1, container, false);
         WouldYouRather1_TV = v.findViewById(R.id.EditText1);
         WouldYouRather2_TV = v.findViewById(R.id.EditText2);
+        WouldYouRatherValue1_ID = v.findViewById(R.id.WoulYourRatherValue1);
+        WouldYouRatherValue2_ID = v.findViewById(R.id.WoulYourRatherValue2);
         buttonNext = v.findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
+        WouldYouRather1_TV.setOnClickListener(this);
+        WouldYouRather2_TV.setOnClickListener(this);
+        //WouldYouRatherValue1_ID.setVisibility(View.INVISIBLE);
+        //WouldYouRatherValue2_ID.setVisibility(View.INVISIBLE);
         checkDB();
-        
+
         return v;
     }
 
@@ -49,8 +62,6 @@ public class fragment_screen_slide_page2 extends Fragment implements View.OnClic
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    String futureUID = "";
-                    String futureUIDzuvor = "";
                     for (DataSnapshot supportItem: snapshot.getChildren()) {
                         futureUIDzuvor = futureUID;
                         futureUID =supportItem.getKey();
@@ -62,24 +73,31 @@ public class fragment_screen_slide_page2 extends Fragment implements View.OnClic
                         }
                     }
 
-                    if(futureUID.equals(""))
+                    if(futureUID.equals("")) {
+                        futureUIDzuvor = "";
+                        IDlist.clear();
                         return;
-                        IDlist.add(futureUID);
-                        query1 = ref.child(futureUID);
-                        query1.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String WouldYouRather1 = snapshot.child("wouldYouRather1").getValue().toString();
-                                String WouldYouRather2 = snapshot.child("wouldYouRather2").getValue().toString();
-                                WouldYouRather1_TV.setText(WouldYouRather1);
-                                WouldYouRather2_TV.setText(WouldYouRather2);
-                            }
+                    }
+                    IDlist.add(futureUID);
+                    query1 = ref.child(futureUID);
+                    query1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String WouldYouRather1 = snapshot.child("wouldYouRather1").getValue().toString();
+                            String WouldYouRather2 = snapshot.child("wouldYouRather2").getValue().toString();
+                            WouldYouRatherValue1 = Integer.parseInt(snapshot.child("wouldYouRather1_value").getValue().toString());
+                            WouldYouRatherValue2 = Integer.parseInt(snapshot.child("wouldYouRather2_value").getValue().toString());
+                            WouldYouRather1_TV.setText(WouldYouRather1);
+                            WouldYouRather2_TV.setText(WouldYouRather2);
+                            WouldYouRatherValue1_ID.setText(Integer.toString(WouldYouRatherValue1));
+                            WouldYouRatherValue2_ID.setText(Integer.toString(WouldYouRatherValue2));
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
+                        }
+                    });
 
                 }
 
@@ -97,9 +115,40 @@ public class fragment_screen_slide_page2 extends Fragment implements View.OnClic
         switch (view.getId()){
             case R.id.buttonNext:
                 //Toast.makeText(getActivity(),
-                  //      "Next Q", Toast.LENGTH_LONG).show();
+                //      "Next Q", Toast.LENGTH_LONG).show();
+                WouldYouRatherValue1_ID.setVisibility(View.INVISIBLE);
+                WouldYouRatherValue2_ID.setVisibility(View.INVISIBLE);
+                WouldYouRather1_TV.setClickable(true);
+                WouldYouRather2_TV.setClickable(true);
                 checkDB();
                 break;
+            case R.id.EditText1:
+                Toast.makeText(getActivity(),
+                        "EDT 1", Toast.LENGTH_LONG).show();
+                WouldYouRatherValue1_ID.setVisibility(View.VISIBLE);
+                WouldYouRatherValue2_ID.setVisibility(View.VISIBLE);
+
+                DatabaseReference updateData = FirebaseDatabase.getInstance()
+                        .getReference("Questions")
+                        .child(futureUID);
+                updateData.child("wouldYouRather1_value").setValue(WouldYouRatherValue1+1);
+                WouldYouRather1_TV.setClickable(false);
+                WouldYouRather2_TV.setClickable(false);
+                break;
+            case R.id.EditText2:
+                Toast.makeText(getActivity(),
+                        "EDT 2", Toast.LENGTH_LONG).show();
+                WouldYouRatherValue1_ID.setVisibility(View.VISIBLE);
+                WouldYouRatherValue2_ID.setVisibility(View.VISIBLE);
+
+                updateData = FirebaseDatabase.getInstance()
+                        .getReference("Questions")
+                        .child(futureUID);
+                updateData.child("wouldYouRather2_value").setValue(WouldYouRatherValue2+1);
+                WouldYouRather1_TV.setClickable(false);
+                WouldYouRather2_TV.setClickable(false);
+                break;
+
         }
     }
 }

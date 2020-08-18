@@ -6,13 +6,21 @@ public class Questions {
     private String WouldYouRather1,WouldYouRather2;
     private Date date;
     private String Kategory;
-    private int WouldYouRather1_value, WouldYouRather2_value;
+    private int WouldYouRather1_value, WouldYouRather2_value, popularity;
 
     public Questions() {
     }
 
     public int getWouldYouRather1_value() {
         return WouldYouRather1_value;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
     }
 
     public void setWouldYouRather1_value(int wouldYouRather1_value) {

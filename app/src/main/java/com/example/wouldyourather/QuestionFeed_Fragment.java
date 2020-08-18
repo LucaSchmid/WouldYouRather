@@ -46,6 +46,12 @@ public class QuestionFeed_Fragment extends Fragment {
                             case 1:
                                 tab.setText("Neueste " );
                                 break;
+                            case 2:
+                                tab.setText("Pervers " );
+                                break;
+                            case 3:
+                                tab.setText("Lustig " );
+                                break;
                             default:
                                 tab.setText("Kategorie " + (position + 1));
                         }
@@ -68,9 +74,13 @@ public class QuestionFeed_Fragment extends Fragment {
                         return new fragment_screen_slide_page1();
                     case 1:
                         return new fragment_screen_slide_page2();
+                    case 2:
+                        return new fragment_screen_slide_page3();
+                    case 3:
+                        return new fragment_screen_slide_page4();
                 }
 
-            return new fragment_screen_slide_page1();
+            return new fragment_screen_slide_page2();
         }
 
 
